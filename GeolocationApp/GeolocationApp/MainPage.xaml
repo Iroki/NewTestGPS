@@ -1,11 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GeolocationApp"
-             x:Class="GeolocationApp.MainPage">
+<ContentPage
+    x:Class="GeolocationApp.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:GeolocationApp"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+    <!--  xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" - is needed for GoogleMaps  -->
 
-	<Label Text="Welcome to Xamarin.Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
 
+    <StackLayout Padding="30" VerticalOptions="StartAndExpand">
+        <maps:Map
+            x:Name="MyMap"
+            HasScrollEnabled="True"
+            HasZoomEnabled="True"
+            HeightRequest="500"
+            IsShowingUser="true"
+            MapType="Street"
+            WidthRequest="320" />
+        <Button Command="{Binding OnPickAPlaceButtonTapped}" Text="Get list of places" />
+    </StackLayout>
 </ContentPage>

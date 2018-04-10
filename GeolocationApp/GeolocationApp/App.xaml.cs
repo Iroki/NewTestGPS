@@ -12,8 +12,9 @@ namespace GeolocationApp
 		public App ()
 		{
 			InitializeComponent();
+            
 
-			MainPage = new GeolocationApp.MainPage();
+            MainPage = new GeolocationApp.MainPage();
 		}
 
 		protected override void OnStart ()
