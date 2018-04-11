@@ -18,5 +18,7 @@
             MapType="Street"
             WidthRequest="320" />
         <Button Command="{Binding OnPickAPlaceButtonTapped}" Text="Get list of places" />
+        <ListView ItemsSource="{Binding PickedPlacesCollection}" />
+
     </StackLayout>
 </ContentPage>

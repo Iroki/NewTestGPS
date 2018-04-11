@@ -24,6 +24,7 @@ namespace GeolocationApp.Droid
         public override void OnCreate()
         {
             base.OnCreate();
+            
             RegisterActivityLifecycleCallbacks(this);
             //A great place to initialize Xamarin.Insights and Dependency Services!
         }
@@ -36,7 +37,7 @@ namespace GeolocationApp.Droid
 
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
         {
-            CrossCurrentActivity.Current.Activity = activity;
+            
         }
 
         public void OnActivityDestroyed(Activity activity)
@@ -49,7 +50,7 @@ namespace GeolocationApp.Droid
 
         public void OnActivityResumed(Activity activity)
         {
-            CrossCurrentActivity.Current.Activity = activity;
+            
         }
 
         public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
@@ -58,7 +59,7 @@ namespace GeolocationApp.Droid
 
         public void OnActivityStarted(Activity activity)
         {
-            CrossCurrentActivity.Current.Activity = activity;
+           
         }
 
         public void OnActivityStopped(Activity activity)

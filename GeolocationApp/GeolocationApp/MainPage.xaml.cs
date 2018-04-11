@@ -35,5 +35,11 @@ namespace GeolocationApp
             MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(1.00)));
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            mainViewModel.OnViewModelAppear();
+        }
+
     }
 }

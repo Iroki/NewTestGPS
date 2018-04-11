@@ -2,6 +2,7 @@
 using Plugin.Geolocator.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -15,10 +16,9 @@ namespace GeolocationApp
 {
 	public class MainViewModel : INotifyPropertyChanged
 	{
-		public MainViewModel ()
+		public MainViewModel()
 		{
-            StartListening().Wait();
-            GetCurrentPosition().Wait();
+           
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -32,15 +32,54 @@ namespace GeolocationApp
         {
             get
             {
-                return new Command(() =>
+                return new Command(async () =>
                 {
-                    DependencyService.Get<IPlacePicker>().PickPlace();
+                    var placeResult = await DependencyService.Get<IPlacePicker>().PickPlace();
+                    if (placeResult.OperationSucceed)
+                    {
+                        PickedPlace = placeResult.Data;
+                        PickedPlacesCollection.Add(PickedPlace);
+                    }
+
                 });
             }
         }
 
-        //Geolocation -copy-paste 
+        internal async void OnViewModelAppear()
+        {
+            await StartListening();
+            await GetCurrentPosition();
+        }
 
+        private ObservableCollection<Place> _pickedPlaceCollection = new ObservableCollection<Place>();
+        public ObservableCollection<Place> PickedPlacesCollection
+        {
+            get
+            {
+                return _pickedPlaceCollection;
+            }
+            set
+            {
+                _pickedPlaceCollection = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private Place _pickedPlace;
+        public Place PickedPlace
+        {
+            get
+            {
+                return _pickedPlace;
+            }
+            set
+            {
+                _pickedPlace = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        //Geolocation -copy-paste 
 
         public static async Task<Plugin.Geolocator.Abstractions.Position> GetCurrentPosition()
         {
@@ -75,6 +114,7 @@ namespace GeolocationApp
             if (position == null)
                 return null;
 
+            //необязательно
             var output = string.Format("Time: {0} \nLat: {1} \nLong: {2} \nAltitude: {3} \nAltitude Accuracy: {4} \nAccuracy: {5} \nHeading: {6} \nSpeed: {7}",
                     position.Timestamp, position.Latitude, position.Longitude,
                     position.Altitude, position.AltitudeAccuracy, position.Accuracy, position.Heading, position.Speed);
@@ -119,7 +159,7 @@ namespace GeolocationApp
 
             //If updating the UI, ensure you invoke on main thread
             CurrentPosition = e.Position;
-            //unnecessary
+            //необязательно
             var output = "Full: Lat: " + CurrentPosition.Latitude + " Long: " + CurrentPosition.Longitude;
             output += "\n" + $"Time: {CurrentPosition.Timestamp}";
             output += "\n" + $"Heading: {CurrentPosition.Heading}";
