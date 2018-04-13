@@ -45,7 +45,7 @@ namespace GeolocationApp
             }
         }
 
-        internal async void OnViewModelAppear()
+        internal async void OnViewModelAppear() //добавлено, так как в конструкторе добавлять это было неправильно;
         {
             await StartListening();
             await GetCurrentPosition();

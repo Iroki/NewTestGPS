@@ -20,7 +20,7 @@ namespace GeolocationApp
 
         public override string ToString()
         {
-            return Address
+            return Address;
         }
     }
 }

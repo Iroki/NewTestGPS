@@ -14,8 +14,8 @@ namespace GeolocationApp
 		public MainPage()
 		{
 			InitializeComponent();
-            mainViewModel = new MainViewModel();
-            BindingContext = mainViewModel;
+            MainViewModel = new MainViewModel();
+            BindingContext = MainViewModel;
             MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(50.470691, 30.465316), Distance.FromKilometers(1.00))); //change later somehow
             CrossGeolocator.Current.PositionChanged += (sender, e) =>
             {
@@ -24,13 +24,13 @@ namespace GeolocationApp
 
         }
 
-        MainViewModel mainViewModel;
+        MainViewModel MainViewModel;
 
         Plugin.Geolocator.Abstractions.Position position;
 
         private void Current_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
         {
-            MyMap.Pins.Clear();
+           // MyMap.Pins.Clear();
             position = e.Position;
             MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(1.00)));
         }
@@ -38,7 +38,7 @@ namespace GeolocationApp
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            mainViewModel.OnViewModelAppear();
+            MainViewModel.OnViewModelAppear();
         }
 
     }
